@@ -1,0 +1,15 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+
+    <style name="Theme.CareBuddy" parent="Theme.AppCompat.Light.NoActionBar">
+        <item name="colorPrimary">@color/care_purple</item>
+        <item name="colorPrimaryDark">@color/care_purple_dark</item>
+        <item name="colorAccent">@color/care_purple</item>
+        <item name="android:fontFamily">sans-serif</item>
+        <item name="android:colorAccent">@color/care_purple</item>
+        <item name="android:navigationBarColor">@color/white</item>
+        <item name="android:statusBarColor">@color/care_lavender</item>
+        <item name="android:windowLightNavigationBar">true</item>
+        <item name="android:windowLightStatusBar">true</item>
+    </style>
+</resources>

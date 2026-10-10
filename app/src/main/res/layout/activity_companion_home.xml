@@ -1,0 +1,94 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.coordinatorlayout.widget.CoordinatorLayout xmlns:android="http://schemas.android.com/apk/res/android" xmlns:app="http://schemas.android.com/apk/res-auto" xmlns:tools="http://schemas.android.com/tools" android:layout_width="match_parent" android:layout_height="match_parent" android:background="@drawable/bg_screen">
+  <!-- ===== SCROLLABLE CONTENT ===== -->
+  <ScrollView android:layout_width="match_parent" android:layout_height="match_parent" android:fillViewport="true" android:paddingBottom="88dp">
+    <LinearLayout android:layout_width="match_parent" android:layout_height="wrap_content" android:orientation="vertical" android:padding="20dp">
+      <!-- ===== HEADER ===== -->
+      <LinearLayout android:layout_width="match_parent" android:layout_height="wrap_content" android:gravity="center_vertical" android:orientation="horizontal" android:layout_marginBottom="20dp">
+        <LinearLayout android:layout_width="0dp" android:layout_height="wrap_content" android:layout_weight="1" android:orientation="vertical">
+          <TextView android:id="@+id/tvGreeting" android:layout_width="wrap_content" android:layout_height="wrap_content" tools:text="Good morning," android:textColor="@color/care_muted" android:textSize="15sp" />
+          <TextView android:id="@+id/tvCompanionName" android:layout_width="wrap_content" android:layout_height="wrap_content" tools:text="Ali Rahman" android:textColor="@color/care_ink" android:textSize="24sp" android:textStyle="bold" />
+        </LinearLayout>
+        <ImageView android:id="@+id/ivNotification" android:layout_width="44dp" android:layout_height="44dp" android:background="@drawable/bg_card" android:contentDescription="Notifications" android:padding="10dp" android:src="@android:drawable/ic_popup_reminder" app:tint="@color/care_purple" />
+      </LinearLayout>
+      <!-- ===== TODAY'S BOOKINGS CARD ===== -->
+      <LinearLayout android:id="@+id/todaysBookingsCard" android:layout_width="match_parent" android:layout_height="wrap_content" android:background="@drawable/bg_card" android:clickable="true" android:focusable="true" android:gravity="center_vertical" android:orientation="horizontal" android:padding="20dp" android:layout_marginBottom="16dp">
+        <FrameLayout android:layout_width="48dp" android:layout_height="48dp" android:background="@drawable/bg_icon_blue">
+          <ImageView android:layout_width="24dp" android:layout_height="24dp" android:layout_gravity="center" android:contentDescription="Today's bookings" android:src="@android:drawable/ic_menu_my_calendar" app:tint="#1976D2" />
+        </FrameLayout>
+        <LinearLayout android:layout_width="0dp" android:layout_height="wrap_content" android:layout_weight="1" android:layout_marginStart="14dp" android:orientation="vertical">
+          <TextView android:layout_width="wrap_content" android:layout_height="wrap_content" android:text="Today's Bookings" android:textColor="@color/care_muted" android:textSize="14sp" />
+          <TextView android:id="@+id/tvTodayBookings" android:layout_width="wrap_content" android:layout_height="wrap_content" android:layout_marginTop="2dp" tools:text="1 Booking • 10:00 AM" android:textColor="@color/care_ink" android:textSize="16sp" android:textStyle="bold" />
+        </LinearLayout>
+        <TextView android:layout_width="wrap_content" android:layout_height="wrap_content" android:text="›" android:textColor="@color/care_muted" android:textSize="24sp" />
+      </LinearLayout>
+      <!-- ===== EARNINGS CARD ===== -->
+      <LinearLayout android:id="@+id/earningsCard" android:layout_width="match_parent" android:layout_height="wrap_content" android:background="@drawable/bg_card" android:clickable="true" android:focusable="true" android:gravity="center_vertical" android:orientation="horizontal" android:padding="20dp" android:layout_marginBottom="16dp">
+        <FrameLayout android:layout_width="48dp" android:layout_height="48dp" android:background="@drawable/bg_icon_green">
+          <ImageView android:layout_width="24dp" android:layout_height="24dp" android:layout_gravity="center" android:contentDescription="Earnings" android:src="@android:drawable/ic_menu_save" app:tint="#2E7D32" />
+        </FrameLayout>
+        <LinearLayout android:layout_width="0dp" android:layout_height="wrap_content" android:layout_weight="1" android:layout_marginStart="14dp" android:orientation="vertical">
+          <TextView android:layout_width="wrap_content" android:layout_height="wrap_content" android:text="Completed Booking Value" android:textColor="@color/care_muted" android:textSize="14sp" />
+          <TextView android:id="@+id/tvEarnings" android:layout_width="wrap_content" android:layout_height="wrap_content" android:layout_marginTop="2dp" tools:text="RM 150.00" android:textColor="@color/care_ink" android:textSize="20sp" android:textStyle="bold" />
+        </LinearLayout>
+        <TextView android:layout_width="wrap_content" android:layout_height="wrap_content" android:text="›" android:textColor="@color/care_muted" android:textSize="24sp" />
+      </LinearLayout>
+      <!-- ===== AVAILABILITY TOGGLE (now tappable) ===== -->
+      <LinearLayout android:id="@+id/availabilityCard" android:layout_width="match_parent" android:layout_height="wrap_content" android:background="@drawable/bg_card" android:clickable="true" android:focusable="true" android:gravity="center_vertical" android:orientation="horizontal" android:padding="20dp" android:layout_marginBottom="20dp">
+        <LinearLayout android:layout_width="0dp" android:layout_height="wrap_content" android:layout_weight="1" android:orientation="vertical">
+          <TextView android:layout_width="wrap_content" android:layout_height="wrap_content" android:text="Availability" android:textColor="@color/care_ink" android:textSize="15sp" android:textStyle="bold" />
+          <TextView android:id="@+id/tvAvailabilityStatus" android:layout_width="wrap_content" android:layout_height="wrap_content" android:layout_marginTop="4dp" tools:text="You are available for bookings" android:textColor="@color/care_muted" android:textSize="13sp" />
+        </LinearLayout>
+        <androidx.appcompat.widget.SwitchCompat android:id="@+id/switchAvailability" android:layout_width="wrap_content" android:layout_height="wrap_content" android:checked="false" app:thumbTint="@color/white" app:trackTint="@color/care_purple" />
+      </LinearLayout>
+      <!-- ===== UPCOMING BOOKINGS SECTION ===== -->
+      <TextView android:layout_width="wrap_content" android:layout_height="wrap_content" android:text="Upcoming Bookings" android:textColor="@color/care_ink" android:textSize="17sp" android:textStyle="bold" android:layout_marginBottom="12dp" />
+      <!-- Booking previews are populated from Firestore; hidden until a real booking is loaded. -->
+      <LinearLayout android:id="@+id/sampleBookingCard1" android:layout_width="match_parent" android:layout_height="wrap_content" android:background="@drawable/bg_card" android:orientation="vertical" android:padding="16dp" android:layout_marginBottom="10dp">
+        <LinearLayout android:layout_width="match_parent" android:layout_height="wrap_content" android:gravity="center_vertical" android:orientation="horizontal">
+          <TextView android:layout_width="0dp" android:layout_height="wrap_content" android:layout_weight="1" android:text="" android:textColor="@color/care_ink" android:textSize="15sp" android:textStyle="bold" android:id="@+id/tvUpcomingActivity1" />
+          <TextView android:layout_width="wrap_content" android:layout_height="wrap_content" android:background="@drawable/bg_badge_available" android:paddingHorizontal="10dp" android:paddingVertical="4dp" android:text="" android:textColor="#2E7D32" android:textSize="11sp" android:textStyle="bold" android:id="@+id/tvUpcomingStatus1" />
+        </LinearLayout>
+        <TextView android:id="@+id/tvUpcomingDate1" android:layout_width="match_parent" android:layout_height="wrap_content" android:layout_marginTop="8dp" android:text="" android:textColor="@color/care_muted" android:textSize="13sp" />
+        <TextView android:id="@+id/tvUpcomingLocation1" android:layout_width="match_parent" android:layout_height="wrap_content" android:layout_marginTop="4dp" android:text="" android:textColor="@color/care_muted" android:textSize="13sp" />
+      </LinearLayout>
+      <!-- Additional preview slot; only real booking data is displayed. -->
+      <LinearLayout android:id="@+id/sampleBookingCard2" android:layout_width="match_parent" android:layout_height="wrap_content" android:background="@drawable/bg_card" android:orientation="vertical" android:padding="16dp" android:layout_marginBottom="10dp">
+        <LinearLayout android:layout_width="match_parent" android:layout_height="wrap_content" android:gravity="center_vertical" android:orientation="horizontal">
+          <TextView android:layout_width="0dp" android:layout_height="wrap_content" android:layout_weight="1" android:text="" android:textColor="@color/care_ink" android:textSize="15sp" android:textStyle="bold" android:id="@+id/tvUpcomingActivity2" />
+          <TextView android:layout_width="wrap_content" android:layout_height="wrap_content" android:background="@drawable/bg_badge_available" android:paddingHorizontal="10dp" android:paddingVertical="4dp" android:text="" android:textColor="#2E7D32" android:textSize="11sp" android:textStyle="bold" android:id="@+id/tvUpcomingStatus2" />
+        </LinearLayout>
+        <TextView android:layout_width="match_parent" android:layout_height="wrap_content" android:layout_marginTop="8dp" android:text="" android:textColor="@color/care_muted" android:textSize="13sp" android:id="@+id/tvUpcomingDate2" />
+        <TextView android:layout_width="match_parent" android:layout_height="wrap_content" android:layout_marginTop="4dp" android:text="" android:textColor="@color/care_muted" android:textSize="13sp" android:id="@+id/tvUpcomingLocation2" />
+      </LinearLayout>
+    </LinearLayout>
+  </ScrollView>
+  <!-- ===== BOTTOM NAVIGATION (5 items) ===== -->
+  <LinearLayout android:layout_width="match_parent" android:layout_height="72dp" android:layout_gravity="bottom" android:background="@drawable/bg_card" android:elevation="8dp" android:orientation="horizontal" android:paddingVertical="6dp">
+    <!-- Home (Active) -->
+    <LinearLayout android:id="@+id/navHome" android:layout_width="0dp" android:layout_height="match_parent" android:layout_weight="1" android:clickable="true" android:focusable="true" android:gravity="center" android:orientation="vertical">
+      <ImageView android:layout_width="22dp" android:layout_height="22dp" android:contentDescription="Home" android:src="@android:drawable/ic_menu_myplaces" app:tint="@color/care_purple" />
+      <TextView android:layout_width="wrap_content" android:layout_height="wrap_content" android:layout_marginTop="2dp" android:text="Home" android:textColor="@color/care_purple" android:textSize="10sp" android:textStyle="bold" />
+    </LinearLayout>
+    <!-- Requests -->
+    <LinearLayout android:id="@+id/navRequests" android:layout_width="0dp" android:layout_height="match_parent" android:layout_weight="1" android:clickable="true" android:focusable="true" android:gravity="center" android:orientation="vertical">
+      <ImageView android:layout_width="22dp" android:layout_height="22dp" android:contentDescription="Requests" android:src="@android:drawable/ic_menu_agenda" app:tint="@color/care_muted" />
+      <TextView android:layout_width="wrap_content" android:layout_height="wrap_content" android:layout_marginTop="2dp" android:text="Requests" android:textColor="@color/care_muted" android:textSize="10sp" />
+    </LinearLayout>
+    <!-- Bookings -->
+    <LinearLayout android:id="@+id/navBookings" android:layout_width="0dp" android:layout_height="match_parent" android:layout_weight="1" android:clickable="true" android:focusable="true" android:gravity="center" android:orientation="vertical">
+      <ImageView android:layout_width="22dp" android:layout_height="22dp" android:contentDescription="Bookings" android:src="@android:drawable/ic_menu_my_calendar" app:tint="@color/care_muted" />
+      <TextView android:layout_width="wrap_content" android:layout_height="wrap_content" android:layout_marginTop="2dp" android:text="Bookings" android:textColor="@color/care_muted" android:textSize="10sp" />
+    </LinearLayout>
+    <!-- Earnings -->
+    <LinearLayout android:id="@+id/navEarnings" android:layout_width="0dp" android:layout_height="match_parent" android:layout_weight="1" android:clickable="true" android:focusable="true" android:gravity="center" android:orientation="vertical">
+      <ImageView android:layout_width="22dp" android:layout_height="22dp" android:contentDescription="Earnings" android:src="@android:drawable/ic_menu_save" app:tint="@color/care_muted" />
+      <TextView android:layout_width="wrap_content" android:layout_height="wrap_content" android:layout_marginTop="2dp" android:text="Earnings" android:textColor="@color/care_muted" android:textSize="10sp" />
+    </LinearLayout>
+    <!-- Profile -->
+    <LinearLayout android:id="@+id/navProfile" android:layout_width="0dp" android:layout_height="match_parent" android:layout_weight="1" android:clickable="true" android:focusable="true" android:gravity="center" android:orientation="vertical">
+      <ImageView android:layout_width="22dp" android:layout_height="22dp" android:contentDescription="Profile" android:src="@android:drawable/ic_menu_my_calendar" app:tint="@color/care_muted" />
+      <TextView android:layout_width="wrap_content" android:layout_height="wrap_content" android:layout_marginTop="2dp" android:text="Profile" android:textColor="@color/care_muted" android:textSize="10sp" />
+    </LinearLayout>
+  </LinearLayout>
+</androidx.coordinatorlayout.widget.CoordinatorLayout>

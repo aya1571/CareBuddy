@@ -1,0 +1,8 @@
+<resources>
+    <string name="app_name">CareBuddy</string>
+    <string name="prompt_choose_role">Pilih peranan anda</string>
+    <string-array name="user_roles"><item>Warga Emas</item><item>Pengiring</item><item>Admin</item></string-array>
+    <string-array name="registration_roles"><item>Warga Emas</item><item>Pengiring</item></string-array>
+    <string-array name="booking_activities"><item>Lawatan Hospital</item><item>Membeli-belah</item><item>Urusan</item><item>Aktiviti Lain</item></string-array>
+    <string-array name="booking_durations"><item>1 jam</item><item>2 jam</item><item>3 jam</item><item>4 jam</item><item>5 jam</item><item>6 jam</item><item>7 jam</item><item>8 jam</item></string-array>
+</resources>

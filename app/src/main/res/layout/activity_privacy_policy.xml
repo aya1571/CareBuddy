@@ -1,0 +1,234 @@
+<?xml version="1.0" encoding="utf-8"?>
+<ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@drawable/bg_screen"
+    android:fillViewport="true">
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="vertical">
+
+        <!-- ===== HEADER ===== -->
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:background="@drawable/bg_card"
+            android:elevation="2dp"
+            android:gravity="center_vertical"
+            android:orientation="horizontal"
+            android:padding="16dp">
+
+            <ImageView
+                android:id="@+id/btnClose"
+                android:layout_width="32dp"
+                android:layout_height="32dp"
+                android:contentDescription="Close"
+                android:src="@android:drawable/ic_menu_close_clear_cancel"
+                app:tint="@color/care_ink" />
+
+            <TextView
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:layout_marginStart="12dp"
+                android:text="Privacy Policy"
+                android:textColor="@color/care_ink"
+                android:textSize="20sp"
+                android:textStyle="bold" />
+
+        </LinearLayout>
+
+        <!-- ===== CONTENT ===== -->
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="vertical"
+            android:padding="20dp">
+
+            <!-- ===== LAST UPDATED ===== -->
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:background="@drawable/bg_chip_small"
+                android:padding="12dp"
+                android:layout_marginBottom="20dp">
+
+                <ImageView
+                    android:layout_width="16dp"
+                    android:layout_height="16dp"
+                    android:layout_gravity="center_vertical"
+                    android:contentDescription="Info"
+                    android:src="@android:drawable/ic_menu_info_details"
+                    app:tint="@color/care_purple" />
+
+                <TextView
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1"
+                    android:layout_marginStart="8dp"
+                    android:text="Last updated: 15 SEPTEMBER 2026"
+                    android:textColor="@color/care_ink"
+                    android:textSize="13sp" />
+
+            </LinearLayout>
+
+            <!-- ===== INTRO ===== -->
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginBottom="20dp"
+                android:text="CareBuddy is committed to protecting your privacy. This policy explains how we collect, use, and safeguard your information when you use our app."
+                android:textColor="@color/care_muted"
+                android:textSize="14sp"
+                android:lineSpacingExtra="4dp" />
+
+            <!-- ===== SECTION 1 ===== -->
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="1. Information We Collect"
+                android:textColor="@color/care_purple"
+                android:textSize="16sp"
+                android:textStyle="bold"
+                android:layout_marginBottom="8dp" />
+
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginBottom="20dp"
+                android:text="When you use CareBuddy, we may collect:\n\n• Personal information: name, email address, phone number, and IC number\n\n• Identity verification: IC photo and face photo (only for verification purposes)\n\n• Booking history: activities booked, companions, dates, times, and locations\n\n• Reviews and ratings you submit\n\n• Account preferences and settings"
+                android:textColor="@color/care_muted"
+                android:textSize="14sp"
+                android:lineSpacingExtra="4dp" />
+
+            <!-- ===== SECTION 2 ===== -->
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="2. How We Use Your Information"
+                android:textColor="@color/care_purple"
+                android:textSize="16sp"
+                android:textStyle="bold"
+                android:layout_marginBottom="8dp" />
+
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginBottom="20dp"
+                android:text="We use your information to:\n\n• Verify your identity and prevent fraud\n\n• Connect elderly users with trusted companions\n\n• Process bookings and manage appointments\n\n• Send booking confirmations and important notifications\n\n• Improve our service and user experience\n\n• Comply with legal obligations"
+                android:textColor="@color/care_muted"
+                android:textSize="14sp"
+                android:lineSpacingExtra="4dp" />
+
+            <!-- ===== SECTION 3 ===== -->
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="3. Data Storage &amp; Security"
+                android:textColor="@color/care_purple"
+                android:textSize="16sp"
+                android:textStyle="bold"
+                android:layout_marginBottom="8dp" />
+
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginBottom="20dp"
+                android:text="Your data is stored securely using Google Firebase (Firestore and Firebase Authentication). All sensitive information, including identity documents, is transmitted using industry-standard encryption.\n\nOnly authorized administrators can review identity verification submissions. Regular users cannot access other users' personal data."
+                android:textColor="@color/care_muted"
+                android:textSize="14sp"
+                android:lineSpacingExtra="4dp" />
+
+            <!-- ===== SECTION 4 ===== -->
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="4. Third-Party Services"
+                android:textColor="@color/care_purple"
+                android:textSize="16sp"
+                android:textStyle="bold"
+                android:layout_marginBottom="8dp" />
+
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginBottom="20dp"
+                android:text="CareBuddy uses the following third-party services:\n\n• Firebase Authentication — for secure login and account management\n\n• Cloud Firestore — for data storage\n\n• Google Sign-In — for optional Google account login\n\nThese services have their own privacy policies. We recommend reviewing them."
+                android:textColor="@color/care_muted"
+                android:textSize="14sp"
+                android:lineSpacingExtra="4dp" />
+
+            <!-- ===== SECTION 5 ===== -->
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="5. Your Rights"
+                android:textColor="@color/care_purple"
+                android:textSize="16sp"
+                android:textStyle="bold"
+                android:layout_marginBottom="8dp" />
+
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginBottom="20dp"
+                android:text="You have the right to:\n\n• Access your personal information at any time\n\n• Update or correct your details via the Edit Profile screen\n\n• Change your password at any time\n\n• Request deletion of your account and data\n\n• Opt out of non-essential communications"
+                android:textColor="@color/care_muted"
+                android:textSize="14sp"
+                android:lineSpacingExtra="4dp" />
+
+            <!-- ===== SECTION 6 ===== -->
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="6. Children's Privacy"
+                android:textColor="@color/care_purple"
+                android:textSize="16sp"
+                android:textStyle="bold"
+                android:layout_marginBottom="8dp" />
+
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginBottom="20dp"
+                android:text="CareBuddy is designed for elderly users and their companions. We do not knowingly collect information from children under 13. If we learn that we have collected information from a child under 13, we will delete it promptly."
+                android:textColor="@color/care_muted"
+                android:textSize="14sp"
+                android:lineSpacingExtra="4dp" />
+
+            <!-- ===== SECTION 7 ===== -->
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="7. Contact Us"
+                android:textColor="@color/care_purple"
+                android:textSize="16sp"
+                android:textStyle="bold"
+                android:layout_marginBottom="8dp" />
+
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginBottom="24dp"
+                android:text="If you have questions or concerns about this Privacy Policy, please contact us at:\n\nprivacy@carebuddy.app"
+                android:textColor="@color/care_muted"
+                android:textSize="14sp"
+                android:lineSpacingExtra="4dp" />
+
+            <!-- ===== FOOTER ===== -->
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:gravity="center"
+                android:text="© 2025 CareBuddy Team"
+                android:textColor="@color/care_muted"
+                android:textSize="12sp" />
+
+        </LinearLayout>
+
+    </LinearLayout>
+
+</ScrollView>

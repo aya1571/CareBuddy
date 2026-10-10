@@ -1,0 +1,240 @@
+<?xml version="1.0" encoding="utf-8"?>
+<manifest xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools">
+
+    <!-- ===== PERMISSIONS ===== -->
+    <uses-permission android:name="android.permission.INTERNET" />
+    <uses-permission android:name="android.permission.CAMERA" />
+    <uses-permission android:name="android.permission.POST_NOTIFICATIONS" />
+    <uses-permission android:name="android.permission.ACCESS_COARSE_LOCATION" />
+    <uses-permission android:name="android.permission.ACCESS_FINE_LOCATION" />
+    <uses-permission android:name="android.permission.FOREGROUND_SERVICE" />
+    <uses-permission android:name="android.permission.FOREGROUND_SERVICE_LOCATION" />
+    <uses-permission
+        android:name="android.permission.READ_EXTERNAL_STORAGE"
+        android:maxSdkVersion="32" />
+
+    <!-- ===== FEATURES ===== -->
+    <uses-feature
+        android:name="android.hardware.camera"
+        android:required="false" />
+
+    <application
+        android:name=".CareBuddyApplication"
+        android:allowBackup="true"
+        android:dataExtractionRules="@xml/data_extraction_rules"
+        android:fullBackupContent="@xml/backup_rules"
+        android:icon="@mipmap/ic_launcher"
+        android:label="@string/app_name"
+        android:roundIcon="@mipmap/ic_launcher_round"
+        android:supportsRtl="true"
+        android:theme="@style/Theme.CareBuddy">
+
+        <!-- ===== SPLASH — LAUNCHER ===== -->
+        <activity
+            android:name=".SplashActivity"
+            android:exported="true"
+            android:theme="@style/Theme.CareBuddy">
+
+            <intent-filter>
+                <action android:name="android.intent.action.MAIN" />
+                <category android:name="android.intent.category.LAUNCHER" />
+            </intent-filter>
+
+        </activity>
+
+        <!-- ===== WELCOME (Login + Register buttons) ===== -->
+        <activity
+            android:name=".MainActivity"
+            android:exported="false"
+            android:label="@string/app_name"
+            android:windowSoftInputMode="adjustResize" />
+
+        <!-- ===== AUTH ===== -->
+        <activity
+            android:name=".RegisterActivity"
+            android:exported="false"
+            android:windowSoftInputMode="adjustResize" />
+
+        <activity
+            android:name=".IcVerificationActivity"
+            android:exported="false"
+            android:windowSoftInputMode="adjustResize" />
+
+        <activity
+            android:name=".UserManualActivity"
+            android:exported="false"
+            android:windowSoftInputMode="adjustResize" />
+
+        <!-- ===== ELDERLY HOME ===== -->
+        <activity
+            android:name=".HomeActivity"
+            android:exported="false"
+            android:windowSoftInputMode="adjustResize" />
+
+        <!-- ===== COMPANION HOME (MISSING — NOW ADDED) ===== -->
+        <activity
+            android:name=".CompanionHomeActivity"
+            android:exported="false"
+            android:windowSoftInputMode="adjustResize" />
+
+        <!-- ===== ADMIN ===== -->
+        <activity
+            android:name=".AdminLoginActivity"
+            android:exported="false"
+            android:windowSoftInputMode="adjustResize" />
+
+        <activity
+            android:name=".AdminDashboardActivity"
+            android:exported="false"
+            android:windowSoftInputMode="adjustResize" />
+
+        <activity
+            android:name=".VerificationActivity"
+            android:exported="false" />
+
+        <activity
+            android:name=".UserManagementActivity"
+            android:exported="false" />
+
+        <activity
+            android:name=".CompanionManagementActivity"
+            android:exported="false" />
+
+        <activity
+            android:name=".BookingManagementActivity"
+            android:exported="false" />
+
+        <activity
+            android:name=".PaymentManagementActivity"
+            android:exported="false" />
+
+        <activity
+            android:name=".AdminSettingsActivity"
+            android:exported="false"
+            android:windowSoftInputMode="adjustResize" />
+
+        <activity
+            android:name=".ReportsActivity"
+            android:exported="false" />
+
+        <activity
+            android:name=".AnnouncementsActivity"
+            android:exported="false" />
+
+        <activity
+            android:name=".CreateAnnouncementActivity"
+            android:exported="false"
+            android:windowSoftInputMode="adjustResize" />
+
+        <!-- ===== BOOKING FLOW ===== -->
+        <activity
+            android:name=".FindCompanionActivity"
+            android:exported="false"
+            android:windowSoftInputMode="adjustResize" />
+
+        <activity
+            android:name=".CompanionListActivity"
+            android:exported="false" />
+
+        <activity
+            android:name=".CompanionProfileActivity"
+            android:exported="false" />
+
+        <activity
+            android:name=".EditProfileActivity"
+            android:exported="false"
+            android:windowSoftInputMode="adjustResize" />
+
+        <activity
+            android:name=".ChangePasswordActivity"
+            android:exported="false"
+            android:windowSoftInputMode="adjustResize" />
+
+        <activity
+            android:name=".PrivacyPolicyActivity"
+            android:exported="false" />
+
+        <activity
+            android:name=".BookingActivity"
+            android:exported="false"
+            android:windowSoftInputMode="adjustResize" />
+
+        <activity
+            android:name=".PaymentActivity"
+            android:exported="false" />
+
+        <activity
+            android:name=".BookingConfirmationActivity"
+            android:exported="false" />
+
+        <!-- ===== MY BOOKINGS ===== -->
+        <activity
+            android:name=".MyBookingsActivity"
+            android:exported="false" />
+
+        <activity
+            android:name=".BookingRequestsActivity"
+            android:exported="false" />
+
+        <activity
+            android:name=".RequestDetailsActivity"
+            android:exported="false"
+            android:windowSoftInputMode="adjustResize" />
+
+        <activity
+            android:name=".BookingDetailsActivity"
+            android:exported="false" />
+
+        <activity
+            android:name=".ChatActivity"
+            android:exported="false"
+            android:windowSoftInputMode="adjustResize" />
+
+        <activity android:name=".TrackCompanionActivity" android:exported="false" />
+
+        <service
+            android:name=".CompanionTrackingService"
+            android:exported="false"
+            android:foregroundServiceType="location" />
+
+        <activity
+            android:name=".EarningsActivity"
+            android:exported="false" />
+
+        <activity
+            android:name=".AvailabilityActivity"
+            android:exported="false"
+            android:windowSoftInputMode="adjustResize" />
+
+        <!-- ===== NOTIFICATIONS ===== -->
+        <activity
+            android:name=".NotificationsActivity"
+            android:exported="false" />
+
+        <!-- ===== PROFILE & SETTINGS ===== -->
+        <activity
+            android:name=".ProfileActivity"
+            android:exported="false" />
+
+        <activity
+            android:name=".EmergencyContactActivity"
+            android:exported="false" />
+
+        <activity
+            android:name=".MyReviewsActivity"
+            android:exported="false" />
+
+        <activity
+            android:name=".SettingsActivity"
+            android:exported="false" />
+
+        <!-- ===== ROLE PORTAL (Companion/Admin redirect) ===== -->
+        <activity
+            android:name=".RolePortalActivity"
+            android:exported="false"
+            android:windowSoftInputMode="adjustResize" />
+
+    </application>
+
+</manifest>

@@ -1,0 +1,258 @@
+rules_version = '2';
+service cloud.firestore {
+  match /databases/{database}/documents {
+    function signedIn() {
+      return request.auth != null;
+    }
+
+    function userDoc(uid) {
+      return get(/databases/$(database)/documents/users/$(uid));
+    }
+
+    function isAdmin() {
+      return signedIn() && userDoc(request.auth.uid).data.role == 'admin';
+    }
+
+    function isCompanion(uid) {
+      return signedIn()
+        && userDoc(uid).data.role == 'companion'
+        && userDoc(uid).data.status == 'Active'
+        && userDoc(uid).data.verificationStatus == 'approved';
+    }
+
+    match /users/{uid} {
+      allow create: if signedIn()
+        && request.auth.uid == uid
+        && request.resource.data.uid == uid
+        && request.resource.data.role in ['elderly', 'companion']
+        && request.resource.data.status == 'Active'
+        && request.resource.data.verificationStatus == 'pending';
+
+      allow read: if signedIn() && (request.auth.uid == uid || isAdmin());
+
+      allow update: if isAdmin()
+        || (signedIn()
+          && request.auth.uid == uid
+          && request.resource.data.role == resource.data.role
+          && request.resource.data.status == resource.data.status
+          && request.resource.data.verificationStatus == resource.data.verificationStatus
+          && request.resource.data.diff(resource.data).affectedKeys().hasOnly([
+            'displayName', 'phone', 'gender', 'photoBase64', 'emergencyContactName', 'emergencyContactPhone'
+          ])
+          && (!request.resource.data.keys().hasAny(['gender'])
+            || request.resource.data.gender in ['Prefer not to say', 'Female', 'Male'])
+          && (!request.resource.data.keys().hasAny(['photoBase64'])
+            || request.resource.data.photoBase64.size() <= 270000)
+          && (!request.resource.data.keys().hasAny(['emergencyContactName'])
+            || (request.resource.data.emergencyContactName is string
+              && request.resource.data.emergencyContactName.size() <= 80))
+          && (!request.resource.data.keys().hasAny(['emergencyContactPhone'])
+            || (request.resource.data.emergencyContactPhone is string
+              && request.resource.data.emergencyContactPhone.size() <= 24)));
+
+      allow delete: if isAdmin();
+    }
+
+    match /companionProfiles/{uid} {
+      allow create: if signedIn()
+        && request.resource.data.uid == uid
+        && userDoc(uid).data.role == 'companion'
+        && ((isAdmin()
+            && request.resource.data.verificationStatus in ['approved', 'rejected', 'pending']
+            && request.resource.data.available == false)
+          || (request.auth.uid == uid
+            && request.resource.data.verificationStatus == 'pending'
+            && request.resource.data.available == false));
+
+      allow read: if signedIn()
+        && (request.auth.uid == uid || isAdmin() || resource.data.verificationStatus == 'approved');
+
+      allow update: if isAdmin()
+        || (signedIn()
+          && request.auth.uid == uid
+          && request.resource.data.verificationStatus == resource.data.verificationStatus
+          && request.resource.data.diff(resource.data).affectedKeys().hasOnly([
+            'displayName', 'location', 'hourlyRate', 'bio', 'skills', 'available', 'gender', 'accountStatus'
+          ])
+          && (!request.resource.data.diff(resource.data).affectedKeys().hasAny(['accountStatus'])
+            || (resource.data.keys().hasAny(['accountStatus'])
+              && request.resource.data.accountStatus == resource.data.accountStatus)
+            || (!resource.data.keys().hasAny(['accountStatus'])
+              && request.resource.data.accountStatus == 'Active'
+              && userDoc(uid).data.status == 'Active')));
+
+      allow delete: if isAdmin();
+    }
+
+    match /bookings/{bookingId} {
+      function isVerifiedElderly(uid) {
+        return signedIn()
+          && userDoc(uid).data.role == 'elderly'
+          && userDoc(uid).data.status == 'Active'
+          && userDoc(uid).data.verificationStatus == 'approved';
+      }
+
+      allow create: if signedIn()
+        && request.resource.data.ownerUid == request.auth.uid
+        && isVerifiedElderly(request.auth.uid)
+        && request.resource.data.status == 'Pending'
+        && request.resource.data.companionUid is string
+        && exists(/databases/$(database)/documents/companionProfiles/$(request.resource.data.companionUid))
+        && get(/databases/$(database)/documents/companionProfiles/$(request.resource.data.companionUid)).data.verificationStatus == 'approved'
+        && get(/databases/$(database)/documents/companionProfiles/$(request.resource.data.companionUid)).data.available == true
+        && (!get(/databases/$(database)/documents/companionProfiles/$(request.resource.data.companionUid)).data.keys().hasAny(['accountStatus'])
+          || get(/databases/$(database)/documents/companionProfiles/$(request.resource.data.companionUid)).data.accountStatus == 'Active');
+
+      allow read: if signedIn()
+        && (resource.data.ownerUid == request.auth.uid
+          || (resource.data.companionUid == request.auth.uid && isCompanion(request.auth.uid))
+          || isAdmin());
+
+      function isOwnerPaymentMethodUpdate() {
+        return signedIn()
+          && resource.data.ownerUid == request.auth.uid
+          && resource.data.status == 'Pending'
+          && request.resource.data.status == resource.data.status
+          && request.resource.data.payment in ['Card', 'Online Banking', 'Touch n Go', 'Cash on Arrival']
+          && request.resource.data.diff(resource.data).affectedKeys().hasOnly(['payment']);
+      }
+
+      function isBookingStatusUpdate() {
+        return signedIn()
+          && request.resource.data.diff(resource.data).affectedKeys().hasOnly(['status', 'updatedAt'])
+          && (
+            (resource.data.ownerUid == request.auth.uid
+              && resource.data.status == 'Pending'
+              && request.resource.data.status == 'Cancelled')
+            || (resource.data.companionUid == request.auth.uid
+              && isCompanion(request.auth.uid)
+              && (
+                (resource.data.status == 'Pending' && request.resource.data.status in ['Accepted', 'Declined'])
+                || (resource.data.status == 'Accepted' && request.resource.data.status == 'On The Way')
+                || (resource.data.status == 'On The Way' && request.resource.data.status == 'In Progress')
+                || (resource.data.status == 'In Progress' && request.resource.data.status == 'Completed')
+              ))
+          );
+      }
+
+      allow update: if isAdmin()
+        || isOwnerPaymentMethodUpdate()
+        || isBookingStatusUpdate();
+
+      allow delete: if isAdmin();
+
+      match /tracking/{pointId} {
+        allow read: if signedIn()
+          && get(/databases/$(database)/documents/bookings/$(bookingId)).data.ownerUid == request.auth.uid;
+        allow create, update: if signedIn()
+          && pointId == 'current'
+          && get(/databases/$(database)/documents/bookings/$(bookingId)).data.companionUid == request.auth.uid
+          && isCompanion(request.auth.uid)
+          && get(/databases/$(database)/documents/bookings/$(bookingId)).data.status == 'On The Way'
+          && request.resource.data.keys().hasOnly(['companionUid', 'latitude', 'longitude', 'accuracyMeters', 'updatedAt'])
+          && request.resource.data.companionUid == request.auth.uid
+          && request.resource.data.latitude is number
+          && request.resource.data.latitude >= -90 && request.resource.data.latitude <= 90
+          && request.resource.data.longitude is number
+          && request.resource.data.longitude >= -180 && request.resource.data.longitude <= 180
+          && request.resource.data.accuracyMeters is number
+          && request.resource.data.updatedAt == request.time;
+        allow delete: if signedIn()
+          && get(/databases/$(database)/documents/bookings/$(bookingId)).data.companionUid == request.auth.uid
+          && isCompanion(request.auth.uid);
+      }
+
+      match /messages/{messageId} {
+        function bookingExists() {
+          return exists(/databases/$(database)/documents/bookings/$(bookingId));
+        }
+
+        function isBookingParticipant() {
+          return signedIn() && bookingExists()
+            && (get(/databases/$(database)/documents/bookings/$(bookingId)).data.ownerUid == request.auth.uid
+              || get(/databases/$(database)/documents/bookings/$(bookingId)).data.companionUid == request.auth.uid);
+        }
+
+        function chatIsOpen() {
+          return get(/databases/$(database)/documents/bookings/$(bookingId)).data.status
+            in ['Pending', 'Accepted', 'Upcoming', 'Ongoing', 'On The Way', 'In Progress'];
+        }
+
+        allow read: if isBookingParticipant();
+        allow create: if isBookingParticipant()
+          && chatIsOpen()
+          && request.resource.data.keys().hasOnly(['senderUid', 'text', 'sentAt'])
+          && request.resource.data.senderUid == request.auth.uid
+          && request.resource.data.text is string
+          && request.resource.data.text.size() > 0
+          && request.resource.data.text.size() <= 2000
+          && request.resource.data.sentAt == request.time;
+        allow update: if false;
+        allow delete: if isAdmin();
+      }
+    }
+
+    match /verificationSubmissions/{uid} {
+      allow create: if signedIn()
+        && request.auth.uid == uid
+        && request.resource.data.uid == uid
+        && request.resource.data.status == 'pending'
+        && request.resource.data.icBase64 is string
+        && request.resource.data.icBase64.size() <= 470000
+        && request.resource.data.faceBase64 is string
+        && request.resource.data.faceBase64.size() <= 165000
+        && request.resource.data.role in ['elderly', 'companion'];
+      allow update: if signedIn()
+        && request.auth.uid == uid
+        && resource.data.status == 'rejected'
+        && request.resource.data.uid == uid
+        && request.resource.data.status == 'pending'
+        && request.resource.data.icBase64 is string
+        && request.resource.data.icBase64.size() <= 470000
+        && request.resource.data.faceBase64 is string
+        && request.resource.data.faceBase64.size() <= 165000
+        && request.resource.data.diff(resource.data).affectedKeys().hasOnly([
+          'icBase64', 'faceBase64', 'status', 'submittedAt'
+        ]);
+      allow read: if signedIn() && (request.auth.uid == uid || isAdmin());
+      allow update, delete: if isAdmin();
+    }
+
+    match /reviews/{reviewId} {
+      allow read: if signedIn();
+      allow create: if signedIn()
+        && request.resource.data.bookingId == reviewId
+        && request.resource.data.reviewerUid == request.auth.uid
+        && request.resource.data.stars is int
+        && request.resource.data.stars >= 1
+        && request.resource.data.stars <= 5
+        && exists(/databases/$(database)/documents/bookings/$(reviewId))
+        && get(/databases/$(database)/documents/bookings/$(reviewId)).data.ownerUid == request.auth.uid
+        && get(/databases/$(database)/documents/bookings/$(reviewId)).data.status == 'Completed';
+      allow update, delete: if isAdmin();
+    }
+
+    match /notifications/{notificationId} {
+      allow read: if signedIn()
+        && (resource.data.userId == request.auth.uid || isAdmin());
+      allow create: if signedIn()
+        && request.resource.data.createdBy == request.auth.uid
+        && request.resource.data.bookingId is string
+        && exists(/databases/$(database)/documents/bookings/$(request.resource.data.bookingId))
+        && ((get(/databases/$(database)/documents/bookings/$(request.resource.data.bookingId)).data.ownerUid == request.auth.uid
+              && request.resource.data.userId == get(/databases/$(database)/documents/bookings/$(request.resource.data.bookingId)).data.companionUid)
+          || (get(/databases/$(database)/documents/bookings/$(request.resource.data.bookingId)).data.companionUid == request.auth.uid
+              && request.resource.data.userId == get(/databases/$(database)/documents/bookings/$(request.resource.data.bookingId)).data.ownerUid)
+          || isAdmin());
+      allow update: if signedIn() && resource.data.userId == request.auth.uid
+        && request.resource.data.diff(resource.data).affectedKeys().hasOnly(['read']);
+      allow delete: if isAdmin();
+    }
+
+    match /announcements/{announcementId} {
+      allow read: if signedIn();
+      allow create: if isAdmin();
+      allow update, delete: if isAdmin();
+    }
+  }
+}

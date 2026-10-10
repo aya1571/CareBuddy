@@ -1,0 +1,8 @@
+<resources>
+    <string name="app_name">CareBuddy</string>
+    <string name="prompt_choose_role">请选择您的身份</string>
+    <string-array name="user_roles"><item>长者</item><item>陪护员</item><item>管理员</item></string-array>
+    <string-array name="registration_roles"><item>长者</item><item>陪护员</item></string-array>
+    <string-array name="booking_activities"><item>医院就诊</item><item>购物</item><item>办事</item><item>其他活动</item></string-array>
+    <string-array name="booking_durations"><item>1 小时</item><item>2 小时</item><item>3 小时</item><item>4 小时</item><item>5 小时</item><item>6 小时</item><item>7 小时</item><item>8 小时</item></string-array>
+</resources>

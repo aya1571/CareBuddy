@@ -1,0 +1,29 @@
+<resources>
+    <string name="app_name">CareBuddy</string>
+    <string name="prompt_choose_role">Choose your role</string>
+    <string-array name="user_roles">
+        <item>Elderly</item>
+        <item>Companion</item>
+        <item>Admin</item>
+    </string-array>
+    <string-array name="registration_roles">
+        <item>Elderly</item>
+        <item>Companion</item>
+    </string-array>
+    <string-array name="booking_activities">
+        <item>Hospital Visit</item>
+        <item>Shopping</item>
+        <item>Errands</item>
+        <item>Other Activity</item>
+    </string-array>
+    <string-array name="booking_durations">
+        <item>1 hour</item>
+        <item>2 hours</item>
+        <item>3 hours</item>
+        <item>4 hours</item>
+        <item>5 hours</item>
+        <item>6 hours</item>
+        <item>7 hours</item>
+        <item>8 hours</item>
+    </string-array>
+</resources>
